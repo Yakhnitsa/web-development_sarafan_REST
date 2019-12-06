@@ -15,7 +15,10 @@
     "@babel/preset-env": "^7.7.5",
     "babel-loader": "^8.0.6",
     "vue-loader": "^15.7.2",
+<<<<<<< HEAD
     "vue-template-compiler": "^2.6.10",
+=======
+>>>>>>> 07d4ca264db20213f4d72847fa6143df1f314542
     "vue-template-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
