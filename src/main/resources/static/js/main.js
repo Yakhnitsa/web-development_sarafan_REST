@@ -89,7 +89,7 @@ Vue.component('message-row', {
 
 
 Vue.component('messages-list', {
-    template: '<div style="position relative; with: 300px">' +
+    template: '<div style="position: relative; width: 300px">' +
         '<message-form :messages="this.messages" :messageAttr="message"></message-form>' +
         '<message-row v-for="message in messages" :messages="messages"' +
             ':message="message" :key="message.id" :editMethod="editMethod"></message-row>' +
