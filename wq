@@ -1,0 +1,70 @@
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 5367aec..a6b703e 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -4,5 +4,5 @@[m
+ 3. проверка версии yarn --version[m
+ 4. инициализация yarn init[m
+ 5. установка vue и библиотек-  yarn add vue vue-resource[m
+[31m-6. установка девелоперских зависимостей: yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-loader[m
+[31m-7. добавление в корне нового файла webpack-config.js[m
+\ No newline at end of file[m
+[32m+[m[32m6. установка девелоперских зависимостей: yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-compiler[m
+[32m+[m[32m7. добавление в корне нового файла webpack.config.js[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/java/com/yurets_y/sarafan/controller/MainController.java b/src/main/java/com/yurets_y/sarafan/controller/MainController.java[m
+[1mindex 858bafa..f3869c3 100644[m
+[1m--- a/src/main/java/com/yurets_y/sarafan/controller/MainController.java[m
+[1m+++ b/src/main/java/com/yurets_y/sarafan/controller/MainController.java[m
+[36m@@ -3,6 +3,7 @@[m [mpackage com.yurets_y.sarafan.controller;[m
+ import com.yurets_y.sarafan.domain.User;[m
+ import com.yurets_y.sarafan.repo.MessageRepo;[m
+ import org.springframework.beans.factory.annotation.Autowired;[m
+[32m+[m[32mimport org.springframework.beans.factory.annotation.Value;[m
+ import org.springframework.security.core.annotation.AuthenticationPrincipal;[m
+ import org.springframework.stereotype.Controller;[m
+ import org.springframework.ui.Model;[m
+[36m@@ -18,6 +19,9 @@[m [mpublic class MainController {[m
+     @Autowired[m
+     private final MessageRepo messageRepo;[m
+ [m
+[32m+[m[32m    @Value("${spring.profiles.active}")[m
+[32m+[m[32m    private String profile;[m
+[32m+[m
+     public MainController(MessageRepo messageRepo) {[m
+         this.messageRepo = messageRepo;[m
+     }[m
+[36m@@ -30,6 +34,7 @@[m [mpublic class MainController {[m
+         data.put("messages",messageRepo.findAll());[m
+ [m
+         model.addAttribute("frontendData", data);[m
+[32m+[m[32m        model.addAttribute("isDevMode", "dev".equals(profile));[m
+         return "index";[m
+     }[m
+ }[m
+[1mdiff --git a/src/main/resources/templates/index.html b/src/main/resources/templates/index.html[m
+[1mindex 22d0ce3..41b324a 100644[m
+[1m--- a/src/main/resources/templates/index.html[m
+[1m+++ b/src/main/resources/templates/index.html[m
+[36m@@ -3,9 +3,7 @@[m
+ <head>[m
+     <meta charset="UTF-8">[m
+     <title>Sarafan</title>[m
+[31m-    <!-- версия для разработки, отображает полезные предупреждения в консоли -->[m
+[31m-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>[m
+[31m-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>[m
+[32m+[m
+     <script th:inline="javascript">[m
+         var frontendData = [[${frontendData}]][m
+     </script>[m
+[36m@@ -16,7 +14,9 @@[m
+ <div id="sarafan">[m
+ </div>[m
+ [m
+[31m-<script src="js/main.js"></script>[m
+[32m+[m[32m<script th:src="${isDevMode ? 'http://localhost:8000/main.js' : '/js/main.js'}"></script>[m
+[32m+[m
+[32m+[m
+ [m
+ </body>[m
+ [m

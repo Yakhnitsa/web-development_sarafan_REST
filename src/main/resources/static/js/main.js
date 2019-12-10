@@ -1,4 +1,14 @@
-var messageApi = Vue.resource('/message{/id}');
+import Vue from 'vue'
+
+import App from 'pages/App.vue'
+
+new Vue({
+    el:'#app',
+    render: a => a(App)
+
+})
+
+/*var messageApi = Vue.resource('/message{/id}');
 
 function getIndex(list, id){
     for(var i = 0; i < list.length; i++){
@@ -123,16 +133,6 @@ var sarafan = new Vue({
         messages: frontendData.messages,
         profile: frontendData.profile
     },
-    created: function () {
-        // messageApi.get().then(result => result.json().then(data =>{
-        //     data.forEach(message => this.messages.push(message));
-        // }))
-    //     messageApi.get().then(result = >
-    //     result.json().then(data = >
-    //     data.forEach(message = > this.messages.push(message)
-    // )
-    // )
-    // )
-    }
-});
+
+});*/
 
