@@ -6,3 +6,4 @@
 5. установка vue и библиотек-  yarn add vue vue-resource
 6. установка девелоперских зависимостей: yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-compiler
 7. добавление в корне нового файла webpack.config.js
+
