@@ -8,7 +8,7 @@
 7. добавление в корне нового файла webpack.config.js
 
 
-Пояснение к уроку 8 (Установка WebSocket)
+## Пояснение к уроку 8 (Установка WebSocket)
  Устанавливаем зависимости yarn add sockjs-client @stomp/stompjs
  импортируем библиотеки в код ws.js
     import SockJs from 'sockjs-client'
@@ -19,3 +19,20 @@
          stats: 'errors-only',
          clientLogLevel: 'error'
 
+## Пояснение к уроку 9 (Добавление Vuetify и Material design)
+ - Устанавливаем библиотеки стилей 
+    yarn add -D vue-style-loader css-loader
+ - Меняем конфигурацию Webpack:
+  module -> rules, добавляем правило обработки:
+              {
+                  test: /\.css$/,
+                  use: [
+                      'vue-style-loader',
+                      'css-loader'
+                  ]
+              }
+              
+  - Устанавливаем vuetify
+    yarn add vuetify  
+  - Импортируем Vuetify в приложение   
+              
