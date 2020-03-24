@@ -1,14 +1,14 @@
 <template>
-    <div style="position: relative; width: 300px">
+    <v-layout alight-space-around justify-start column>
         <message-form :messages="this.messages" :messageAttr="message"></message-form>
-        <message-row v-for="message in messages"
+        <message-row v-for="message in sortedMessages"
                      :messages="messages"
                      :message="message"
                      :key="message.id"
                      :editMessage="editMessage"
                      :deleteMessage="deleteMessage">
         </message-row>
-    </div>
+    </v-layout>
 </template>
 
 <script>
@@ -23,6 +23,11 @@
         data: function () {
             return {
                 message: null
+            }
+        },
+        computed:{
+            sortedMessages(){
+                return this.messages.sort((a,b) => -(a.id - b.id))
             }
         },
         methods: {

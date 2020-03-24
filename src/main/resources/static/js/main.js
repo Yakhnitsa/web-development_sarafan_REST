@@ -1,20 +1,20 @@
 import Vue from 'vue'
-import App from 'pages/App.vue'
 import VueResouce from 'vue-resource'
-import Vuetify from 'vuetify'
+import App from 'pages/App.vue'
 import { connect } from 'util/ws'
-//Импорт vuetify стилей
-import 'vuetify/dist/vuetify.min.css'
+import vuetify from 'plugins/vuetify'
+import 'vuetify/dist/vuetify.min.css' //Импорт vuetify стилей
 
 if (frontendData.profile) {
     connect();
 }
 
-Vue.use(Vuetify)
+// Vue.use(Vuetify)
 Vue.use(VueResouce)
 
 new Vue({
     el:'#app',
+    vuetify,
     render: a => a(App)
 
 })

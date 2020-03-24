@@ -37,7 +37,17 @@ module.exports = {
                     'vue-style-loader',
                     'css-loader'
                 ]
-            }
+            },
+            // {
+            //     test: /\.styl$/,
+            //     loader: ['style-loader', 'css-loader', 'stylus-loader', {
+            //         loader: 'vuetify-loader',
+            //         options: {
+            //             theme: path.resolve('./node_modules/vuetify/src/stylus/theme.styl')
+            //         }
+            //     }]
+            // }
+
         ]
     },
     plugins: [

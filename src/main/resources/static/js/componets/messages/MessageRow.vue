@@ -1,11 +1,19 @@
 <template>
-    <div>
-        <i>({{message.id}})</i>  {{message.text}}
-        <span style ="position:absolute; right:0">
-            <input type="button" value="Edit" @click="edit"/>
-            <input type="button" value="x" @click="del"/>
-        </span>
-    </div>
+    <v-layout row class="my-2"
+           align-self>
+        <v-badge color="blue" left inline :content="message.id">
+            <v-icon>mdi-message-reply-text</v-icon>
+        </v-badge>
+        <i>{{message.text}}</i>
+        <v-spacer/>
+        <v-btn @click="edit" small text>
+            <v-icon dark>mdi-pencil</v-icon>
+        </v-btn>
+
+        <v-btn @click="del" small text>
+            <v-icon>mdi-delete-forever</v-icon>
+        </v-btn>
+    </v-layout>
 </template>
 
 <script>
@@ -23,5 +31,7 @@
 </script>
 
 <style scoped>
-
+    .v-badge__badge {
+        font-size: 10px;
+    }
 </style>

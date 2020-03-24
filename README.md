@@ -34,5 +34,47 @@
               
   - Устанавливаем vuetify
     yarn add vuetify  
-  - Импортируем Vuetify в приложение   
+  - Импортируем Vuetify в приложение
+    main.js:
+        import Vuetify from 'vuetify'
+        //Импорт vuetify стилей
+        import 'vuetify/dist/vuetify.min.css'
+        Vue.use(Vuetify)
+  - После возникновения ошибки создаем файл настройки Vuetify  plugins/vuetify.js
+        import Vue from "vue"
+        import Vuetify from 'vuetify'
+        
+        Vue.use(Vuetify)
+        
+        export default new Vuetify({
+            icons: {
+                iconfont: 'md',  // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
+            },
+            theme: {
+                dark: false,
+            },
+            themes: {
+                light: {
+                    primary: "#4682b4",
+                    secondary: "#b0bec5",
+                    accent: "#8c9eff",
+                    error: "#b71c1c",
+                },
+            },
+        })
+  - Импортируем vuetify в main.js и добавляем к приложению:
+        import vuetify from 'plugins/vuetify'
+        new Vue({
+            el:'#app',
+            vuetify, - передаем настроенный экземпляр в приложение
+            render: a => a(App)
+        
+        })          
+  - Импортируем стили и настройки в index.html:
+        <!--Импорт иконок и стилей для vuetify-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <!--Настройка viewport для корректного отображения на мобильных устройствах-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">      
+     
               
