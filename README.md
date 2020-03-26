@@ -77,11 +77,54 @@
         <!--Настройка viewport для корректного отображения на мобильных устройствах-->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">      
         
-## Часть 10, настройка vuex
+## Часть 11, настройка vuex
     - Добавление vuex в приоожение
         yarn add vuex
         yarn add @babel/polyfill        
      
     -  Создаем файл настройки vuex в папке store/store.js
     
+## Часть 12, Настройка Vue-router
+    - Устанавливаем vue router
+        yarn add vue-router
+    - Настраиваем сервер для работы Vue router:
+    Добавляем конфигурацию для того, чтобы все непрописанные пути в приложении отправлялись обратно в браузер, и управлялись с помощью роутера.
+    @Configuration
+    public class WebMvcConfig implements WebMvcConfigurer {
+        @Bean
+        public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerFactoryCustomizer(){
+            return container ->{
+                   /*Настройка перенаправления в случаи ошибки (если запрашиваемый УРЛ не найден)
+                   * Насройка для того, чтобы всеми неизвесными запросами занимался роутер.
+                   * */
+                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/"));
+            };
+        }
+    }
+    - Настраиваем router в файле router/router и импортируем страницы, которые он отображает
+    import Vue from 'vue'
+    import VueRouter from 'vue-router'
+    import MessageList from 'pages/MessageList.vue' - импорт страниц
+    import Auth from 'pages/Auth.vue' - импорт страниц
     
+    Vue.use(VueRouter)
+    
+    export default new VueRouter({
+        mode:'history', - меняем режим на отображения простых путей, без #
+        routes: - настраивание путей
+        [
+            { path: '/', component: MessageList },
+            { path: '/auth', component: Auth },
+            { path: '*', component: MessageList }
+        ]
+    
+    })
+   
+    - Настраиваем главную страницу для отображения страницы роутинга:
+    pages/App.vue:
+            <v-content>
+                <router-view></router-view> - отображение контента роутинга.
+    
+            </v-content>
+ 
+        

@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     // Изменяемые свойства объекта, computed properties, ets...
     getters:{
-        sortedMessages: state => state.messages.sort((a,b) => -(a.id - b.id))
+        sortedMessages: state => (state.messages || []).sort((a,b) => -(a.id - b.id))
     },
     // Методы для изменения объектов приолжения
     mutations: {

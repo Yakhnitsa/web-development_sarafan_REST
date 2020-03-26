@@ -1,12 +1,15 @@
 <template>
-    <v-layout alight-space-around justify-start column>
-        <message-form :messageAttr="message"></message-form>
-        <message-row v-for="message in sortedMessages"
-                     :message="message"
-                     :key="message.id"
-                     :editMessage="editMessage">
-        </message-row>
-    </v-layout>
+    <v-container>
+        <v-layout alight-space-around justify-start column>
+            <message-form :messageAttr="message"></message-form>
+            <message-row v-for="message in sortedMessages"
+                         :message="message"
+                         :key="message.id"
+                         :editMessage="editMessage">
+            </message-row>
+        </v-layout>
+    </v-container>
+
 </template>
 
 <script>
@@ -25,11 +28,11 @@
                 message: null
             }
         },
-        computed: mapGetters(['sortedMessages']),
+        //Доступ к центральному хранилищу через mapGetters
+        computed: mapGetters(['sortedMessages','profile']),
         // Альтернативная запись гееттеров
         // computed:{
         //     sortedMessages: function (){
-        //         // console.log(this.$store.getters.sortedMessages)
         //         return this.$store.getters.sortedMessages
         //     }
         // },

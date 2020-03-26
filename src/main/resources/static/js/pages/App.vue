@@ -17,10 +17,7 @@
                 Необходимо авторизоваться через
                 <a href="/login">Google</a>
             </v-container>
-            <v-container v-if="profile">
-                <messages-list></messages-list>
-            </v-container>
-
+            <router-view></router-view>
 
         </v-content>
     </v-app>
@@ -29,23 +26,16 @@
 </template>
 
 <script>
-    import MessagesList from 'componets/messages/MessageList.vue'
     import { addHandler} from "util/ws"
     import {mapState, mapMutations} from 'vuex'
 
     export default{
-        components:{
-            MessagesList
-        },
         data: function() {
             return{
 
             }
 
         },
-        // computed: {
-        //     ...mapState(['profile'])
-        // },
         computed: mapState(['profile']),
         methods: mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
         created(){
