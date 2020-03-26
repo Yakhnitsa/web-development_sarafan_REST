@@ -76,5 +76,12 @@
         <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
         <!--Настройка viewport для корректного отображения на мобильных устройствах-->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">      
+        
+## Часть 10, настройка vuex
+    - Добавление vuex в приоожение
+        yarn add vuex
+        yarn add @babel/polyfill        
      
-              
+    -  Создаем файл настройки vuex в папке store/store.js
+    
+    
