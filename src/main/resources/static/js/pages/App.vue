@@ -2,23 +2,27 @@
     <v-app>
         <v-app-bar app>
             <v-toolbar-title>Sarafan</v-toolbar-title>
+            <v-btn text class="mx-2"
+                   :disabled="$route.path === '/'"
+                   @click="showMessages"
+                   v-if="profile">Messages</v-btn>
             <v-spacer></v-spacer>
-            <div v-if="profile">
+            <v-btn text
+                    @click="showProfile"
+                    :disabled="$route.path === '/profile'"
+                    v-if="profile">
                 {{profile.name}}
-                <v-btn icon href="/logout" >
-                    <v-icon>mdi-logout-variant</v-icon>
-                </v-btn>
-            </div>
+            </v-btn>
+            <v-btn icon
+                   v-if="profile"
+                   href="/logout" >
+                <v-icon>mdi-logout-variant</v-icon>
+            </v-btn>
 
         </v-app-bar>
 
         <v-content>
-            <v-container v-if="!profile">
-                Необходимо авторизоваться через
-                <a href="/login">Google</a>
-            </v-container>
             <router-view></router-view>
-
         </v-content>
     </v-app>
 
@@ -37,7 +41,16 @@
 
         },
         computed: mapState(['profile']),
-        methods: mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
+        methods:{
+            ...mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
+            showMessages(){
+                this.$router.push('/')
+            },
+            showProfile(){
+                this.$router.push('/profile')
+            }
+        },
+
         created(){
             addHandler(data =>{
                 if(data.objectType == 'MESSAGE'){
@@ -59,6 +72,11 @@
                     console.error('Oops, objectType is unknown ${data.objectType}')
                 }
             })
+        },
+        beforeMount(){
+            if(!this.profile){
+                this.$router.replace('/auth')
+            }
         }
     }
 </script>

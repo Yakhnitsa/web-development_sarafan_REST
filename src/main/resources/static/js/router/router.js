@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MessageList from 'pages/MessageList.vue'
 import Auth from 'pages/Auth.vue'
+import Profile from 'pages/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,7 @@ export default new VueRouter({
     [
         { path: '/', component: MessageList },
         { path: '/auth', component: Auth },
+        { path: '/profile', component: Profile },
         { path: '*', component: MessageList }
     ]
 
