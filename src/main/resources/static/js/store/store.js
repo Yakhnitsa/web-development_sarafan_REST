@@ -26,14 +26,6 @@ export default new Vuex.Store({
             const updatedMessages = state.messages;
             updatedMessages.splice(updateIndex,1,message)
             state.messages = [...updatedMessages]
-
-            // state.messages = [
-            //     ...state.messages.slice(0,updateIndex),
-            //     message,
-            //     ...state.messages.slice(updateIndex + 1)
-            // ]
-
-
         },
         removeMessageMutation(state,message){
             const deleteIndex = state.messages.findIndex(item => item.id === message.id)

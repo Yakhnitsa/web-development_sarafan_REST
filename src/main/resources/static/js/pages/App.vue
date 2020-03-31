@@ -40,7 +40,9 @@
             }
 
         },
+
         computed: mapState(['profile']),
+
         methods:{
             ...mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
             showMessages(){
