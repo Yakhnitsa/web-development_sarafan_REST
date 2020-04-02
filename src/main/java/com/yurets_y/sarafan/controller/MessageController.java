@@ -3,6 +3,7 @@ package com.yurets_y.sarafan.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.yurets_y.sarafan.domain.Message;
+import com.yurets_y.sarafan.domain.User;
 import com.yurets_y.sarafan.domain.Views;
 import com.yurets_y.sarafan.dto.EventType;
 import com.yurets_y.sarafan.dto.MetaDto;
@@ -17,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -60,8 +62,12 @@ public class MessageController {
 
     /*Добавление нового сообщения*/
     @PostMapping
-    public Message create(@RequestBody Message message) throws IOException {
+    public Message create(
+            @RequestBody Message message,
+            @AuthenticationPrincipal User author
+    ) throws IOException {
         message.setCreationTime(LocalDateTime.now());
+        message.setAuthor(author);
         fillMetadata(message);
         Message updatedMessage = messageRepo.save(message);
 
@@ -84,7 +90,7 @@ public class MessageController {
         Message updatedMessage = messageRepo.save(messageFromDB);
         wsSender.accept(EventType.UPDATE,updatedMessage);
 
-        return updatedMessage;
+            return updatedMessage;
     }
 
     @DeleteMapping("{id}")

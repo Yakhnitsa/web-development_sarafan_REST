@@ -1,6 +1,10 @@
 package com.yurets_y.sarafan.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.yurets_y.sarafan.domain.User;
+import com.yurets_y.sarafan.domain.Views;
 import com.yurets_y.sarafan.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,20 +26,28 @@ public class MainController {
     @Value("${spring.profiles.active}")
     private String profile;
 
-    public MainController(MessageRepo messageRepo) {
+    private final ObjectWriter objectWriter;
+
+    public MainController(MessageRepo messageRepo, ObjectMapper objectMapper) {
         this.messageRepo = messageRepo;
+        this.objectWriter = objectMapper
+                .setConfig(objectMapper.getSerializationConfig())
+                .writerWithView(Views.FullMessage.class);
     }
 
     @GetMapping
-    public String getMainPage(Model model, @AuthenticationPrincipal User user){
+    public String getMainPage(Model model, @AuthenticationPrincipal User user) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
+        String messages = "{}";
         if(user != null){
             data.put("profile",user);
-            data.put("messages",messageRepo.findAll());
+            messages = objectWriter.writeValueAsString(messageRepo.findAll());
+
         }
 
 
         model.addAttribute("frontendData", data);
+        model.addAttribute("messages",messages);
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }

@@ -1,24 +1,63 @@
 <template>
-    <v-card class="my-2">
-        <v-card-text primary-title>
-            <i>({{ message.id }})</i>
-            {{ message.text }}
-        </v-card-text>
-        <media v-if="message.link" :message="message"></media>
-        <v-card-actions>
-            <v-btn value="Edit" @click="edit" small text rounded>Edit</v-btn>
-            <v-btn icon @click="del" small>
-                <v-icon>delete</v-icon>
-            </v-btn>
-        </v-card-actions>
+    <v-card class="d-inline-block ml-2">
+        <v-container>
+            <v-row justify="space-between">
+                <v-col cols="auto">
+
+                    <v-row
+                            class="flex-column ma-1"
+                            justify="center"
+                    >
+                        <v-col class="px-0">
+                            <media v-if="message.link" :message="message"></media>
+                        </v-col>
+                        <v-col>
+                            {{ message.text }}
+                        </v-col>
+
+
+                    </v-row>
+                </v-col>
+
+                <v-col cols="auto" class="text-left pl-1">
+                    <v-row
+                            class="flex-column ma-0 fill-height"
+                            justify="center"
+                    >
+                        <v-col class="px-0">
+                            <v-badge left inline :content="message.id">
+                                <!--<v-icon>mdi-message-outline</v-icon>-->
+                            </v-badge>
+                        </v-col>
+                        <v-col class="px-0">
+                            <v-btn value="Edit" @click="edit" small text rounded>
+                                <v-icon>mdi-email-edit-outline</v-icon>
+                            </v-btn>
+                        </v-col>
+
+                        <v-col class="px-0">
+                            <v-btn @click="del" small text rounded>
+                                <v-icon>mdi-delete-forever</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </v-container>
+        <comment-list
+            :message-id="message.id"
+            :comments="message.comments"
+        ></comment-list>
     </v-card>
+
 </template>
 
 <script>
     import {mapActions} from 'vuex'
     import Media from "../media/Media.vue";
+    import CommentList from "../comment/CommentList.vue";
     export default {
-        components: {Media},
+        components: {CommentList, Media},
         props: ['message','editMessage'],
         comments:{ Media },
         methods: {

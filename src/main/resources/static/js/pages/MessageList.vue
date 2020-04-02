@@ -1,12 +1,16 @@
 <template>
     <v-container>
+        <message-form :messageAttr="message"></message-form>
+        <v-container>
+
+        </v-container>
         <v-layout alight-space-around justify-start column>
-            <message-form :messageAttr="message"></message-form>
             <message-row v-for="message in sortedMessages"
                          :message="message"
                          :key="message.id"
                          :editMessage="editMessage">
             </message-row>
+
         </v-layout>
     </v-container>
 
@@ -29,7 +33,7 @@
             }
         },
         //Доступ к центральному хранилищу через mapGetters
-        computed: mapGetters(['sortedMessages','profile']),
+        computed: mapGetters(['sortedMessages']),
         // Альтернативная запись гееттеров
         // computed:{
         //     sortedMessages: function (){

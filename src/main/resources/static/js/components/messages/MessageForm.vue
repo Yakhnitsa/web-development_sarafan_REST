@@ -3,6 +3,7 @@
         <v-text-field
                 label="new message"
                 v-model="text"
+                @keyup.enter="save"
                 placeholder="Write message"/>
         <v-btn @click="save">
             Save

@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -37,6 +40,15 @@ public class Message {
 
     @JsonView(Views.FullMessage.class)
     private String linkCover;
+
+    @ManyToOne
+    @JoinColumn(name="author_id")
+    @JsonView(Views.FullMessage.class)
+    private User author;
+
+    @OneToMany(mappedBy = "message", orphanRemoval = true)
+    @JsonView(Views.FullMessage.class)
+    private List<Comment> comments = new ArrayList<>();
 
 
     public Long getId() {
@@ -93,5 +105,35 @@ public class Message {
 
     public void setLinkCover(String linkCover) {
         this.linkCover = linkCover;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(id, message.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }
