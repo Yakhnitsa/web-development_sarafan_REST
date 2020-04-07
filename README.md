@@ -127,4 +127,19 @@
     
             </v-content>
  
-        
+     
+## 15. Решение циклических ссылок при сериализации JSON
+    Аннотации для классов:
+    (Вместо целого объекта записывает одно из полей, в данном случае поле ID
+    @JsonIdentityInfo(
+            generator=ObjectIdGenerators.PropertyGenerator.class,
+            property = "id"
+    )  
+    
+    Аннотации для полей
+    (Убирает обратную ссылку на объект
+    @JsonManagedReference - на поле со ссылкой на другой сериализируемый объект
+    private List<Comment> comments = new ArrayList<>();
+    
+    @JsonBackReference - на поле, на которое ссылается предыдущая аннотация.   
+    private Message message;   

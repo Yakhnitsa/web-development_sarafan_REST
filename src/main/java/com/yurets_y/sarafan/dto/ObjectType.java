@@ -1,5 +1,6 @@
 package com.yurets_y.sarafan.dto;
 
 public enum ObjectType {
-    MESSAGE
+    MESSAGE,
+    COMMENT
 }

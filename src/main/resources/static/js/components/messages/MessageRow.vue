@@ -1,4 +1,5 @@
 <template>
+
     <v-card class="d-inline-block ml-2">
         <v-container>
             <v-row justify="space-between">
@@ -12,7 +13,31 @@
                             <media v-if="message.link" :message="message"></media>
                         </v-col>
                         <v-col>
-                            {{ message.text }}
+
+                            <div>
+                                <v-avatar v-if="message.author && message.author.userpic">
+                                    <img
+                                            :src="message.author.userpic"
+                                            size="48px"
+                                            :alt="message.author.name"
+                                    >
+                                </v-avatar>
+                                <v-avatar
+                                        v-else
+                                        size="36px"
+                                        color="indigo">
+                                    <v-icon dark>mdi-account-circle</v-icon>
+                                </v-avatar>
+
+                                <span class="pl-2">
+                                    {{authorName}}
+                                </span>
+                                <div>
+                                    {{ message.text }}
+                                </div>
+
+                            </div>
+
                         </v-col>
 
 
@@ -59,7 +84,11 @@
     export default {
         components: {CommentList, Media},
         props: ['message','editMessage'],
-        comments:{ Media },
+        computed:{
+            authorName(){
+                return this.message.author ? message.author.name : 'unknown'
+            }
+        },
         methods: {
             ...mapActions(['removeMessageAction']),
             edit: function () {

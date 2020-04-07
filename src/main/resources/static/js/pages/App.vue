@@ -44,7 +44,11 @@
         computed: mapState(['profile']),
 
         methods:{
-            ...mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
+            ...mapMutations(['addMessageMutation',
+                'updateMessageMutation',
+                'removeMessageMutation',
+                'addCommentMutation'
+            ]),
             showMessages(){
                 this.$router.push('/')
             },
@@ -70,7 +74,17 @@
                             console.error('It seems event type is undefined ${data.eventType}')
 
                     }
-                } else{
+                } else if(data.objectType == 'COMMENT'){
+                    switch(data.eventType){
+                        case 'CREATE':
+                            this.addCommentMutation(data.body)
+                            break
+                        default:
+                            console.error('It seems event type is undefined ${data.eventType}')
+
+                    }
+                }
+                else{
                     console.error('Oops, objectType is unknown ${data.objectType}')
                 }
             })

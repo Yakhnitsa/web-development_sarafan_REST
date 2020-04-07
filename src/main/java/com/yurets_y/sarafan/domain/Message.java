@@ -1,7 +1,6 @@
 package com.yurets_y.sarafan.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -16,6 +15,11 @@ import java.util.Objects;
 //@Data
 @ToString(of ={"id","text"})
 @EqualsAndHashCode(of = {""})
+// Решение цикличесских ссылок, если Message сылается на Comment, а Comment обратно на message. и без конца.
+@JsonIdentityInfo(
+        generator=ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +52,7 @@ public class Message {
 
     @OneToMany(mappedBy = "message", orphanRemoval = true)
     @JsonView(Views.FullMessage.class)
+//    @JsonManagedReference - альтернативная запись для решения циклических ссілок
     private List<Comment> comments = new ArrayList<>();
 
 

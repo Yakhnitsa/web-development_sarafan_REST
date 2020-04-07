@@ -1,5 +1,5 @@
 <template>
-    <v-layout row class="mx-1">
+    <v-layout row class="mx-1 px-2">
         <v-text-field
                 label="add comment"
                 v-model="text"

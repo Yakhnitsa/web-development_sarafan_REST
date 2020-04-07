@@ -5,7 +5,7 @@
 
         </v-container>
         <v-layout alight-space-around justify-start column>
-            <message-row v-for="message in sortedMessages"
+            <message-row  class ="my-1" v-for="message in sortedMessages"
                          :message="message"
                          :key="message.id"
                          :editMessage="editMessage">
