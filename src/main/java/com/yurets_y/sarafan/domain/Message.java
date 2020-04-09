@@ -3,6 +3,7 @@ package com.yurets_y.sarafan.domain;
 import com.fasterxml.jackson.annotation.*;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -51,8 +52,9 @@ public class Message {
     private User author;
 
     @OneToMany(mappedBy = "message", orphanRemoval = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JsonView(Views.FullMessage.class)
-//    @JsonManagedReference - альтернативная запись для решения циклических ссілок
+//    @JsonManagedReference - альтернативная запись для решения циклических ссылок
     private List<Comment> comments = new ArrayList<>();
 
 

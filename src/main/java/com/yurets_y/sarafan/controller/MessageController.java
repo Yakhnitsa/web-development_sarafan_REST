@@ -5,53 +5,36 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.yurets_y.sarafan.domain.Message;
 import com.yurets_y.sarafan.domain.User;
 import com.yurets_y.sarafan.domain.Views;
-import com.yurets_y.sarafan.dto.EventType;
-import com.yurets_y.sarafan.dto.MetaDto;
-import com.yurets_y.sarafan.dto.ObjectType;
-import com.yurets_y.sarafan.repo.MessageRepo;
-import com.yurets_y.sarafan.util.WsSender;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.beans.BeanUtils;
+import com.yurets_y.sarafan.dto.MessagePageDto;
+import com.yurets_y.sarafan.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
-    private final static String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
-    private final static String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
-
-    private final static Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
-    private final static Pattern IMG_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
-
-
-    private final MessageRepo messageRepo;
-    private final BiConsumer<EventType,Message> wsSender;
+    private final MessageService messageService;
+    public static final int MESSAGES_PER_PAGE = 3;
 
     @Autowired
-    public MessageController(MessageRepo messageRepo, WsSender sender) {
-
-        this.messageRepo = messageRepo;
-        this.wsSender = sender.getSender(ObjectType.MESSAGE,Views.IdName.class);
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @GetMapping
-    @JsonView(Views.IdName.class)
-    public List<Message> list(){
-        return messageRepo.findAll();
+    @JsonView(Views.FullMessage.class)
+    public MessagePageDto list(
+            @PageableDefault(size=MESSAGES_PER_PAGE,
+                sort={"id"},
+                direction = Sort.Direction.DESC
+    ) Pageable pageable){
+        return messageService.getAll(pageable);
     }
     @GetMapping("{id}")
     @JsonView(Views.FullMessage.class)
@@ -62,83 +45,29 @@ public class MessageController {
 
     /*Добавление нового сообщения*/
     @PostMapping
+    @JsonView(Views.FullMessage.class)
     public Message create(
-            @RequestBody Message message,
-            @AuthenticationPrincipal User author
+            @RequestBody Message message
+            ,@AuthenticationPrincipal User author
     ) throws IOException {
-        message.setCreationTime(LocalDateTime.now());
-        message.setAuthor(author);
-        fillMetadata(message);
-        Message updatedMessage = messageRepo.save(message);
+        System.out.println(message);
+        return messageService.createMessage(message,author);
 
-        wsSender.accept(EventType.CREATE,updatedMessage);
-
-        return updatedMessage;
     }
+
     /*Редактирование существующего сообщения*/
     @PutMapping("{id}")
     public Message update(
             @PathVariable("id") Message messageFromDB,
-            @RequestBody Message message) throws IOException {
-        BeanUtils.copyProperties(message,messageFromDB,"id");
-        try{
-            fillMetadata(messageFromDB);
-        }catch(IOException e){
-
-        }
-
-        Message updatedMessage = messageRepo.save(messageFromDB);
-        wsSender.accept(EventType.UPDATE,updatedMessage);
-
-            return updatedMessage;
+            @RequestBody Message message) throws IOException
+    {
+            return messageService.updateMessage(messageFromDB, message);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Message message){
-        messageRepo.delete(message);
-        wsSender.accept(EventType.REMOVE,message);
+        messageService.delete(message);
+
     }
 
-//
-//    @MessageMapping("/changeMessage")
-//    @SendTo("/topic/activity")
-//    public Message change(Message message){
-//        return messageRepo.save(message);
-//    }
-
-    private void fillMetadata(Message message) throws IOException {
-        String text = message.getText();
-        Matcher matcher = URL_REGEX.matcher(text);
-
-        if(matcher.find()){
-            String url = text.substring(matcher.start(),matcher.end());
-            Matcher imgMatcher = IMG_REGEX.matcher(url);
-            message.setLink(url);
-            if(imgMatcher.find()){
-                message.setLinkCover(url);
-            } else if(!url.contains("youtu")){
-                MetaDto meta = getMeta(url);
-
-                message.setLinkTitle(meta.getTitle());
-                message.setLinkCover(meta.getCover());
-                message.setLinkDescription(meta.getDescription());
-            }
-        }
-    }
-
-    private MetaDto getMeta(String url) throws IOException {
-        Document doc = Jsoup.connect(url).get();
-        Elements title = doc.select("meta[name$=title],meta[property$=title]");
-        Elements description = doc.select("meta[name$=description],meta[property$=description]");
-        Elements cover = doc.select("meta[name$=image],meta[property$=image]");
-        return new MetaDto(
-                getContent(title.first()),
-                getContent(description.first()),
-                getContent(cover.first())
-        );
-    }
-
-    private String getContent(Element element){
-        return element == null ? "" : element.attr("content");
-    }
 }

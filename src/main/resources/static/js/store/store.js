@@ -9,7 +9,7 @@ export default new Vuex.Store({
     // Состояние объекта, массивы и прочее
     state: {
         messages: messages,
-        profile: frontendData.profile
+        ...frontendData
     },
     // Изменяемые свойства объекта, computed properties, ets...
     getters:{
@@ -47,6 +47,22 @@ export default new Vuex.Store({
             }
 
         },
+        addMessagePageMutation(state,messages){
+            const targetMessages = state.messages
+                .concat(messages)
+                .reduce((res,val) =>{
+                    res[val.id] = val
+                    return res
+                },{})
+            state.messages = Object.values(targetMessages);
+        },
+        updateTotalPagesMutation(state, totalPages){
+            state.totalPages = totalPages
+        },
+        updateCurrentPageMutation(state,currentPage){
+            state.currentPage = currentPage
+        }
+
 
     },
 
@@ -77,6 +93,15 @@ export default new Vuex.Store({
             const response = await commentsApi.add(comment)
             const data = await response.json();
             commit('addCommentMutation',data)
+        },
+        async loadPageAction({commit,state}){
+            const response = await messagesApi.page(state.currentPage +1)
+            console.log(response)
+            const data = await response.json()
+            console.log(data)
+            commit('addMessagePageMutation',data.messages)
+            commit('updateTotalPagesMutation',data.totalPages)
+            commit('updateCurrentPageMutation',Math.min(data.currentPage,data.totalPages))
         }
     }
 })
