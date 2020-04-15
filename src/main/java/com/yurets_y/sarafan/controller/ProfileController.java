@@ -26,13 +26,14 @@ public class ProfileController {
 
     @PostMapping("change-subscription/{channelId}")
     @JsonView(Views.FullProfile.class)
-    public User subscribe(
+    public User changeSubscription(
             @AuthenticationPrincipal User subscriber,
-            @PathVariable("channelId") User channel){
+            @PathVariable("channelId") User channel
+    ) {
         if (subscriber.equals(channel)) {
             return channel;
+        } else {
+            return profileService.changeSubscription(channel, subscriber);
         }
-
-        return profileService.changeSubscription(subscriber,channel);
     }
 }

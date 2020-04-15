@@ -1,7 +1,18 @@
 <template>
     <v-container>
+
         <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
-            <div class="title mb-3">User profile</div>
+            <div class="title mb-3">
+                <span>User profile</span>
+                <v-btn
+                        v-if="!isMyProfile"
+                        @click="changeSubscription"
+                >
+                    {{isISubscribed ? 'Unsubscribe' : 'Subscribe'}}
+
+                </v-btn>
+            </div>
+
         </v-flex>
         <v-row no-gutters>
             <v-col>
@@ -17,13 +28,7 @@
                     <v-flex>{{profile.subscriptions && profile.subscriptions.length}} subscriptions</v-flex>
                     <v-flex>{{profile.subscribers && profile.subscribers.length}} subscribers</v-flex>
                 </v-layout>
-                <v-btn
-                        v-if="!isMyProfile"
-                        @click="changeSubscription"
-                >
-                    {{isISubscribed ? 'Unsubscribe' : 'Subscribe'}}
 
-                </v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -40,7 +45,8 @@
         },
         computed: {
             isMyProfile(){
-                return this.$route.params.id || this.$route.params.id === this.$store.state.profile.id
+                return !this.$route.params.id ||
+                    this.$route.params.id === this.$store.state.profile.id
             },
             isISubscribed(){
                 this.profile.subscribers &&

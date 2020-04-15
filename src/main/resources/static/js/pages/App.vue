@@ -58,8 +58,10 @@
         },
 
         created(){
+            console.log('created')
             addHandler(data =>{
                 if(data.objectType == 'MESSAGE'){
+                    console.log(data)
                     switch(data.eventType){
                         case 'CREATE':
                             this.addMessageMutation(data.body)
