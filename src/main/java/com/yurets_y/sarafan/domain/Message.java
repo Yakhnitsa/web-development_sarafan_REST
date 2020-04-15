@@ -1,6 +1,7 @@
 package com.yurets_y.sarafan.domain;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
@@ -13,9 +14,9 @@ import java.util.Objects;
 
 @Entity
 @Table
-//@Data
-@ToString(of ={"id","text"})
-@EqualsAndHashCode(of = {""})
+@Data
+@ToString(of = {"id", "text"})
+@EqualsAndHashCode(of = {"id"})
 // Решение цикличесских ссылок, если Message сылается на Comment, а Comment обратно на message. и без конца.
 @JsonIdentityInfo(
         generator=ObjectIdGenerators.PropertyGenerator.class,

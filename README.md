@@ -143,3 +143,22 @@
     
     @JsonBackReference - на поле, на которое ссылается предыдущая аннотация.   
     private Message message;   
+    
+## 17. Подписки и подписчики:
+        @JsonIdentityReference - кастомизирует следующую аннотацию, 
+        @JsonIdentityInfo(
+                generator=ObjectIdGenerators.PropertyGenerator.class,
+                property = "id"
+        ) - аннотация записывающая объекты под аннотацией в виде полей property="id" вместо полного объекта.
+        
+        @EntityGraph(attributePaths = {"subscriptions", "subscribers"})
+        Optional<User> findById(String s);   - Аннотация для загрузки ленивых коллекций, позовляет загружать ленивые коллекции при вызове 
+        методов репозитория.
+        
+        Пояснение к роутеру:
+        Динамический путь
+        export default new VueRouter({
+            ....
+            { path: '/user/:id?', component: Profile }, :id? - необязательное поле
+        Получение параметров роутера в элементе
+        const id = this.$route.params.id                

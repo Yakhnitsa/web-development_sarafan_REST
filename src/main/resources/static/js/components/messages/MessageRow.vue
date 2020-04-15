@@ -4,7 +4,6 @@
         <v-container>
             <v-row justify="space-between">
                 <v-col cols="auto">
-
                     <v-row
                             class="flex-column ma-1"
                             justify="center"
@@ -13,29 +12,12 @@
                             <media v-if="message.link" :message="message"></media>
                         </v-col>
                         <v-col>
+                            <user-link
+                                    size="48"
+                                    :user="message.author"></user-link>
 
                             <div>
-                                <v-avatar v-if="message.author && message.author.userpic">
-                                    <img
-                                            :src="message.author.userpic"
-                                            size="48px"
-                                            :alt="message.author.name"
-                                    >
-                                </v-avatar>
-                                <v-avatar
-                                        v-else
-                                        size="36px"
-                                        color="indigo">
-                                    <v-icon dark>mdi-account-circle</v-icon>
-                                </v-avatar>
-
-                                <span class="pl-2">
-                                    {{authorName}}
-                                </span>
-                                <div>
-                                    {{ message.text }}
-                                </div>
-
+                                {{ message.text }}
                             </div>
 
                         </v-col>
@@ -81,14 +63,11 @@
     import {mapActions} from 'vuex'
     import Media from "../media/Media.vue";
     import CommentList from "../comment/CommentList.vue";
+    import UserLink from "components/UserLink.vue";
     export default {
-        components: {CommentList, Media},
+        components: {UserLink, CommentList, Media},
         props: ['message','editMessage'],
-        computed:{
-            authorName(){
-                return this.message.author ? message.author.name : 'unknown'
-            }
-        },
+
         methods: {
             ...mapActions(['removeMessageAction']),
             edit: function () {

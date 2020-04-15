@@ -12,7 +12,7 @@ export default new VueRouter({
     [
         { path: '/', component: MessageList },
         { path: '/auth', component: Auth },
-        { path: '/profile', component: Profile },
+        { path: '/user/:id?', component: Profile },
         { path: '*', component: MessageList }
     ]
 

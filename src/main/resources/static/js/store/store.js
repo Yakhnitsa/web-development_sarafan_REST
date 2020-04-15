@@ -8,6 +8,7 @@ import commentsApi from 'api/comments'
 export default new Vuex.Store({
     // Состояние объекта, массивы и прочее
     state: {
+        profile,
         messages: messages,
         ...frontendData
     },

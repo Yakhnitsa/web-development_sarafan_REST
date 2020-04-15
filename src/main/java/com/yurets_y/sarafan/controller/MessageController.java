@@ -36,6 +36,7 @@ public class MessageController {
     ) Pageable pageable){
         return messageService.getAll(pageable);
     }
+
     @GetMapping("{id}")
     @JsonView(Views.FullMessage.class)
     public Message oneMessage(@PathVariable("id") Message message){
@@ -50,10 +51,10 @@ public class MessageController {
             @RequestBody Message message
             ,@AuthenticationPrincipal User author
     ) throws IOException {
-        System.out.println(message);
         return messageService.createMessage(message,author);
 
     }
+
 
     /*Редактирование существующего сообщения*/
     @PutMapping("{id}")
