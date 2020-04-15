@@ -4,6 +4,7 @@ package com.yurets_y.sarafan.domain;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name="Auth_user")
 @EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id", "name"})
 public class User implements Serializable {
     @Id
     @JsonView(Views.IdName.class)
@@ -32,33 +34,20 @@ public class User implements Serializable {
     @JsonView(Views.FullProfile.class)
     private LocalDateTime lastVisit;
 
-    @ManyToMany
-    @JoinTable(
-            name="USER_SUBSCRIPTIONS",
-            joinColumns = @JoinColumn(name="SUBSCRIBER_ID"),
-            inverseJoinColumns = @JoinColumn(name="CHANNEL_ID")
-    )
     @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            generator=ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
+    @OneToMany(
+            mappedBy = "subscriber",
+            orphanRemoval = true
     )
-    private Set<User> subscriptions = new HashSet<>();
+    private Set<UserSubscription> subscriptions = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name="USER_SUBSCRIPTIONS",
-            joinColumns = @JoinColumn(name="CHANNEL_ID"),
-            inverseJoinColumns = @JoinColumn(name="SUBSCRIBER_ID")
-    )
     @JsonView(Views.FullProfile.class)
-    @JsonIdentityReference
-    @JsonIdentityInfo(
-            generator=ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
+    @OneToMany(
+            mappedBy = "channel",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
     )
-    private Set<User> subscribers = new HashSet<>();
+    private Set<UserSubscription> subscribers = new HashSet<>();
 
     public String getId() {
         return id;
@@ -116,19 +105,19 @@ public class User implements Serializable {
         this.lastVisit = lastVisit;
     }
 
-    public Set<User> getSubscriptions() {
+    public Set<UserSubscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(Set<User> subscriptions) {
+    public void setSubscriptions(Set<UserSubscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
 
-    public Set<User> getSubscribers() {
+    public Set<UserSubscription> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(Set<User> subscribers) {
+    public void setSubscribers(Set<UserSubscription> subscribers) {
         this.subscribers = subscribers;
     }
 }
