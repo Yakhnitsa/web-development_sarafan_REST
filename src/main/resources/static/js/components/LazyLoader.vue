@@ -14,7 +14,6 @@
 
                 const el = document.documentElement
                 const isBottomOfScreen = el.scrollTop + window.innerHeight >= el.offsetHeight
-                console.log(isBottomOfScreen)
                 if(isBottomOfScreen){
                     this.loadPageAction()
                 }

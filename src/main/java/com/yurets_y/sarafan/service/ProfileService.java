@@ -22,7 +22,7 @@ public class ProfileService {
     public User changeSubscription(User subscriber, User channel) {
         List<UserSubscription> userSubscriptions = channel.getSubscribers()
                 .stream()
-                .filter(subscription -> subscriber.getSubscribers().equals(subscriber))
+                .filter(subscription -> subscription.getSubscriber().equals(subscriber))
                 .collect(Collectors.toList());
 
         if(userSubscriptions.isEmpty()){

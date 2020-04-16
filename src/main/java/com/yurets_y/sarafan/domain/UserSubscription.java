@@ -1,12 +1,10 @@
 package com.yurets_y.sarafan.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,6 +15,7 @@ import javax.persistence.MapsId;
 @Data
 @EqualsAndHashCode(of={"id"})
 @ToString(of={"id"})
+@NoArgsConstructor
 public class UserSubscription {
     @EmbeddedId
     @JsonIgnore
@@ -25,6 +24,7 @@ public class UserSubscription {
     @MapsId("channelId")
     @ManyToOne
     @JsonView(Views.IdName.class)
+    @JsonIdentityReference
     @JsonIdentityInfo(
             generator=ObjectIdGenerators.PropertyGenerator.class,
             property = "id"
@@ -34,6 +34,7 @@ public class UserSubscription {
     @MapsId("subscriberId")
     @ManyToOne
     @JsonView(Views.IdName.class)
+    @JsonIdentityReference
     @JsonIdentityInfo(
             generator=ObjectIdGenerators.PropertyGenerator.class,
             property = "id"

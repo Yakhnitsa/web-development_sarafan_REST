@@ -2,12 +2,14 @@ package com.yurets_y.sarafan.service;
 
 import com.yurets_y.sarafan.domain.Message;
 import com.yurets_y.sarafan.domain.User;
+import com.yurets_y.sarafan.domain.UserSubscription;
 import com.yurets_y.sarafan.domain.Views;
 import com.yurets_y.sarafan.dto.EventType;
 import com.yurets_y.sarafan.dto.MessagePageDto;
 import com.yurets_y.sarafan.dto.MetaDto;
 import com.yurets_y.sarafan.dto.ObjectType;
 import com.yurets_y.sarafan.repo.MessageRepo;
+import com.yurets_y.sarafan.repo.UserSubscriptionRepo;
 import com.yurets_y.sarafan.util.WsSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -36,17 +39,29 @@ public class MessageService {
 
 
     private final MessageRepo messageRepo;
+    private final UserSubscriptionRepo subscriptionRepo;
+
     private final BiConsumer<EventType,Message> wsSender;
 
     @Autowired
-    public MessageService(MessageRepo messageRepo, WsSender sender) {
-
+    public MessageService(
+            MessageRepo messageRepo,
+            UserSubscriptionRepo subscriptionRepo,
+            WsSender sender) {
         this.messageRepo = messageRepo;
+        this.subscriptionRepo = subscriptionRepo;
         this.wsSender = sender.getSender(ObjectType.MESSAGE,Views.IdName.class);
     }
 
-    public MessagePageDto getAll(Pageable pageable) {
-        Page<Message> page = messageRepo.findAll(pageable);
+    public MessagePageDto findForUser(Pageable pageable, User user) {
+        List<User> channels = subscriptionRepo.findBySubscriber(user)
+                .stream()
+                .map(UserSubscription::getChannel)
+                .collect(Collectors.toList());
+
+        channels.add(user);
+
+        Page<Message> page = messageRepo.findByAuthorIn(channels,pageable);
         return new MessagePageDto(
                 page.getContent(),
                 pageable.getPageNumber(),

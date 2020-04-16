@@ -49,10 +49,24 @@
                     this.$route.params.id === this.$store.state.profile.id
             },
             isISubscribed(){
-                this.profile.subscribers &&
-                    this.profile.subscribers.find( subscription =>{
-                        return subscription.id === this.$store.state.profile.id
-                    })
+                // console.log(this.profile.id)
+                // const notEmpty = this.profile.subscribers
+                // const contains =  this.$store.state.profile.subscriptions.find(subscription =>{
+                //         let param = subscription.channel.id === this.profile.id
+                //         return param
+                //     }
+                // )
+
+                return this.profile.subscribers &&
+                    this.$store.state.profile.subscriptions.find(subscription =>{
+                            return subscription.channel.id === this.profile.id
+                        }
+                    )
+
+                // this.profile.subscribers &&
+                //     this.profile.subscribers.find( subscription =>{
+                //         return subscription.subscriber.id === this.$store.state.profile.id
+                //     })
             }
         },
         watch:{
