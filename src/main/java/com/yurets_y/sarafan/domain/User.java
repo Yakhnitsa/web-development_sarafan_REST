@@ -37,8 +37,8 @@ public class User implements Serializable {
     @JsonView(Views.FullProfile.class)
     @OneToMany(
             mappedBy = "subscriber",
-            orphanRemoval = true,
-            ascade = CascadeType.ALL
+            orphanRemoval = true
+//            cascade = CascadeType.ALL
     )
     private Set<UserSubscription> subscriptions = new HashSet<>();
 

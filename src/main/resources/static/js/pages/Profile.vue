@@ -48,25 +48,12 @@
                 return !this.$route.params.id ||
                     this.$route.params.id === this.$store.state.profile.id
             },
-            isISubscribed(){
-                // console.log(this.profile.id)
-                // const notEmpty = this.profile.subscribers
-                // const contains =  this.$store.state.profile.subscriptions.find(subscription =>{
-                //         let param = subscription.channel.id === this.profile.id
-                //         return param
-                //     }
-                // )
 
+            isISubscribed() {
                 return this.profile.subscribers &&
-                    this.$store.state.profile.subscriptions.find(subscription =>{
-                            return subscription.channel.id === this.profile.id
-                        }
-                    )
-
-                // this.profile.subscribers &&
-                //     this.profile.subscribers.find( subscription =>{
-                //         return subscription.subscriber.id === this.$store.state.profile.id
-                //     })
+                    this.profile.subscribers.find(subscription => {
+                        return subscription.subscriber === this.$store.state.profile.id
+                    })
             }
         },
         watch:{
@@ -77,6 +64,7 @@
         methods:{
             async changeSubscription(){
                 const data = await profileApi.changeSubscription(this.profile.id);
+                this.$store.dispatch('updatePageAction')
                 this.profile = await data.json();
             },
             async updateProfile(){

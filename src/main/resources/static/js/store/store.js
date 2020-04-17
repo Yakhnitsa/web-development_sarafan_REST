@@ -57,6 +57,9 @@ export default new Vuex.Store({
                 },{})
             state.messages = Object.values(targetMessages);
         },
+        updateMessagePageMutation(state,messages){
+            state.messages = [...messages]
+        },
         updateTotalPagesMutation(state, totalPages){
             state.totalPages = totalPages
         },
@@ -97,12 +100,17 @@ export default new Vuex.Store({
         },
         async loadPageAction({commit,state}){
             const response = await messagesApi.page(state.currentPage +1)
-            console.log(response)
             const data = await response.json()
-            console.log(data)
             commit('addMessagePageMutation',data.messages)
             commit('updateTotalPagesMutation',data.totalPages)
             commit('updateCurrentPageMutation',Math.min(data.currentPage,data.totalPages))
+        },
+        async updatePageAction({commit,state}){
+            const response = await messagesApi.page(0)
+            const data = await response.json()
+            commit('updateMessagePageMutation',data.messages)
+            commit('updateTotalPagesMutation',data.totalPages)
+            commit('updateCurrentPageMutation',0)
         }
     }
 })

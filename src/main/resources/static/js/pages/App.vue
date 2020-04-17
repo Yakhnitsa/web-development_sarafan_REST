@@ -51,6 +51,7 @@
             ]),
             showMessages(){
                 this.$router.push('/')
+
             },
             showProfile(){
                 this.$router.push('/user')
