@@ -8,5 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserSubscriptionRepo extends JpaRepository<UserSubscription,UserSubscriptionId> {
+
     List<UserSubscription> findBySubscriber(User subscriber);
+
+    UserSubscription findByChannelAndSubscriber(User channel, User subscriber);
+
+    List<UserSubscription> findByChannel(User channel);
 }

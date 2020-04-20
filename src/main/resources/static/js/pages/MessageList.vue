@@ -1,9 +1,6 @@
 <template>
     <v-container>
         <message-form :messageAttr="message"></message-form>
-        <v-container>
-
-        </v-container>
         <v-layout alight-space-around justify-start column>
             <message-row  class ="my-1" v-for="message in sortedMessages"
                          :message="message"
