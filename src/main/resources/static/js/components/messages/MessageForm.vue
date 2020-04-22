@@ -13,6 +13,8 @@
 
 <script>
     import {mapActions} from 'vuex'
+    import * as Sentry from '@sentry/browser'
+
     export default {
         props: ['messageAttr'],
         data: function () {
@@ -30,6 +32,7 @@
         methods: {
             ...mapActions(['addMessageAction','updateMessageAction']),
             save() {
+                Sentry.captureMessage('Message was sent: ' + this.text)
                 const message = {
                     id: this.id,
                     text: this.text}
@@ -42,6 +45,7 @@
                 }
                 this.id = null;
                 this.text = '';
+                throw new Error("Big bang!!!")
             }
         }
     }

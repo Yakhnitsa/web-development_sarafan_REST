@@ -161,4 +161,19 @@
             ....
             { path: '/user/:id?', component: Profile }, :id? - необязательное поле
         Получение параметров роутера в элементе
-        const id = this.$route.params.id                
+        const id = this.$route.params.id        
+        
+### 19. Интеграция логирования с Sentry
+    Установка проекта
+    yarn add @sentry/browser
+    yarn add @sentry/integrations
+    
+    Интеграция проекта в приложение в main.js
+    import Vue from 'vue'
+    import * as Sentry from '@sentry/browser';
+    import { Vue as VueIntegration } from '@sentry/integrations';
+    
+    Sentry.init({
+      dsn: 'https://06398d8afeb44d39aebe8dc934ed6b27@o381691.ingest.sentry.io/5209379',
+      integrations: [new VueIntegration({Vue, attachProps: true})],
+    });       
