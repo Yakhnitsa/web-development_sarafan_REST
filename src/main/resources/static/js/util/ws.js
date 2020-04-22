@@ -5,7 +5,6 @@ let stompClient = null
 const handlers = []
 
 export function connect() {
-    console.log("web socket connetcion...")
     const socket = new SockJS('/gs-guide-websocket')
     stompClient = Stomp.over(socket)
     stompClient .debug = () =>{}
