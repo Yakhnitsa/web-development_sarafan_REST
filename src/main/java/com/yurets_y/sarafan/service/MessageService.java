@@ -50,7 +50,7 @@ public class MessageService {
             WsSender sender) {
         this.messageRepo = messageRepo;
         this.subscriptionRepo = subscriptionRepo;
-        this.wsSender = sender.getSender(ObjectType.MESSAGE,Views.IdName.class);
+        this.wsSender = sender.getSender(ObjectType.MESSAGE,Views.FullMessage.class);
     }
 
     public MessagePageDto findForUser(Pageable pageable, User user) {
@@ -117,13 +117,12 @@ public class MessageService {
     }
 
     public Message updateMessage(Message messageFromDB, Message message) {
-        BeanUtils.copyProperties(message,messageFromDB,"id");
+        messageFromDB.setText(message.getText());
         try{
             fillMetadata(messageFromDB);
         }catch(IOException e){
-
+            e.printStackTrace();
         }
-
         Message updatedMessage = messageRepo.save(messageFromDB);
         wsSender.accept(EventType.UPDATE,updatedMessage);
         return updatedMessage;

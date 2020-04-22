@@ -59,11 +59,16 @@ public class MessageController {
 
     /*Редактирование существующего сообщения*/
     @PutMapping("{id}")
+    @JsonView(Views.FullMessage.class)
     public Message update(
+            @AuthenticationPrincipal User author,
             @PathVariable("id") Message messageFromDB,
             @RequestBody Message message) throws IOException
     {
-            return messageService.updateMessage(messageFromDB, message);
+        if(!messageFromDB.getAuthor().equals(author)){
+            throw new SecurityException("Пользователь не является автором сообщения");
+        }
+        return messageService.updateMessage(messageFromDB, message);
     }
 
     @DeleteMapping("{id}")

@@ -3,10 +3,9 @@
         :to="`/user/${user.id}`"
         class="px-2"
     >
-        <v-avatar v-if="user && user.userpic">
+        <v-avatar :size="`${size || 36}px`" v-if="user && user.userpic">
             <img
                     :src="user.userpic"
-                    :size="`${size || 36}px`"
                     :alt="user.name"
             >
         </v-avatar>

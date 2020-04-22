@@ -37,13 +37,13 @@
                             </v-badge>
                         </v-col>
                         <v-col class="px-0">
-                            <v-btn value="Edit" @click="edit" small text rounded>
+                            <v-btn value="Edit" @click="edit" :disabled="!isAuthor" small text rounded>
                                 <v-icon>mdi-email-edit-outline</v-icon>
                             </v-btn>
                         </v-col>
 
                         <v-col class="px-0">
-                            <v-btn @click="del" small text rounded>
+                            <v-btn :disabled="!isAuthor" @click="del" small text rounded>
                                 <v-icon>mdi-delete-forever</v-icon>
                             </v-btn>
                         </v-col>
@@ -67,7 +67,11 @@
     export default {
         components: {UserLink, CommentList, Media},
         props: ['message','editMessage'],
-
+        computed:{
+            isAuthor(){
+                return this.$store.state.profile.id === this.message.author.id
+            }
+        },
         methods: {
             ...mapActions(['removeMessageAction']),
             edit: function () {
@@ -76,6 +80,7 @@
             del: function () {
                 this.removeMessageAction(this.message);
             }
+
         }
     }
 </script>
