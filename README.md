@@ -184,9 +184,15 @@
         // email: profile && profile.email,
     });
         
-    Интерграция sentry на сервере
-    <dependency>
-        <groupId>io.sentry</groupId>
-        <artifactId>sentry</artifactId>
-        <version>1.7.30</version>
-    </dependency>    
+    Интерграция sentry на сервере для spring  https://docs.sentry.io/clients/java/integrations/#spring
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-spring</artifactId>
+            <version>1.7.30</version>
+        </dependency> 
+        
+    Создаем конфигурацию в файле logging.properties
+    dns=.....
+    Создаем евенты:
+    Sentry.capture("Some message...");   
+    

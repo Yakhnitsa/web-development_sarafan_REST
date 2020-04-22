@@ -11,6 +11,7 @@ import com.yurets_y.sarafan.dto.ObjectType;
 import com.yurets_y.sarafan.repo.MessageRepo;
 import com.yurets_y.sarafan.repo.UserSubscriptionRepo;
 import com.yurets_y.sarafan.util.WsSender;
+import io.sentry.Sentry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -117,6 +118,7 @@ public class MessageService {
     }
 
     public Message updateMessage(Message messageFromDB, Message message) {
+        Sentry.capture("editing message");
         messageFromDB.setText(message.getText());
         try{
             fillMetadata(messageFromDB);
