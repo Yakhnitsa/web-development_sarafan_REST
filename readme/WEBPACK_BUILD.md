@@ -95,13 +95,21 @@
           mode: 'production',
         });    
         
-  Меняем настройки путей в файле      
+  Убираем директорию 'static' из common файла   
   [webpack.common.js](../webpack.common.js)   
   
     - entry: path.join(__dirname, 'src', 'main', 'resources', 'static', 'js', 'main.js'),  - убираем путь static
     + entry: path.join(__dirname, 'src', 'main', 'resources', 'js', 'main.js'),  
     
-## Установка сборщика мусора
+    resolve: {
+            modules: [
+    -            path.join(__dirname, 'src', 'main', 'resources','static','js'),
+    +            path.join(__dirname, 'src', 'main', 'resources', 'js'),
+                path.join(__dirname, 'node_modules'),
+            ],
+        }
+    
+## Установка сборщика мусора и настройка файла продакшена
        yarn add -D clean-webpack-plugin
    Добавляем плагин в файл [webpack.prod.js](../webpack.prod.js)  
     
@@ -111,4 +119,22 @@
           
        plugins: [
            new CleanWebpackPlugin()
-       ],             
+       ],    
+   Добавляем секцию output файла (сборка в файл main.js + раздешенные пути)
+
+        output: {
+            filename: 'main.js',
+            path: path.resolve(__dirname, 'src', 'main', 'resources', 'static','js'),
+        },            
+
+## Настройка файла запуста
+   в файле [package.json](../package.json)  
+   добавляем настройки запуска приложения:
+   
+     "scripts": {
+       "start": "webpack-dev-server --open --config webpack.dev.js",
+       "build": "webpack --config webpack.prod.js"
+     },  
+     
+## Долгая и нудная дрочелыга по изменению путей: 
+            
