@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import { addHandler} from "util/ws"
+    import { addHandler} from "../util/ws"
     import {mapState, mapMutations} from 'vuex'
 
     export default{

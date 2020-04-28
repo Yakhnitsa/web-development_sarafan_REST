@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Файлы сборки node.js ###
+/src/main/resources/static/js

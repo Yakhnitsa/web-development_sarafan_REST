@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
-import messagesApi from 'api/messages'
-import commentsApi from 'api/comments'
+import messagesApi from 'js/api/messages'
+import commentsApi from 'js/api/comments'
 
 // Централизованное хранилище Vuex для данных приложения
 export default new Vuex.Store({

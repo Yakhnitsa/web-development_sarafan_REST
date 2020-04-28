@@ -5,7 +5,7 @@
 4. инициализация yarn init
 5. установка vue и библиотек-  yarn add vue vue-resource
 6. установка девелоперских зависимостей: yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-compiler
-7. добавление в корне нового файла webpack.config.js
+7. добавление в корне нового файла webpack.common.js
 
 
 ## Пояснение к уроку 8 (Установка WebSocket)
@@ -14,7 +14,7 @@
     import SockJs from 'sockjs-client'
     import Stomp from '@stomp/stompjs'
  
- Меняем log level webpack, в файле webpack.config.js  добавляем настройки логирования:
+ Меняем log level webpack, в файле webpack.common.js  добавляем настройки логирования:
     devServer: {
          stats: 'errors-only',
          clientLogLevel: 'error'
@@ -194,5 +194,8 @@
     Создаем конфигурацию в файле logging.properties
     dns=.....
     Создаем евенты:
-    Sentry.capture("Some message...");   
+    Sentry.capture("Some message...");
     
+### 20 Сборка всего добра в единый файл для деплоя
+   [Подробнее в файле](./readme/WEBPACK_BUILD.md)
+       

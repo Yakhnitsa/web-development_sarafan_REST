@@ -63,7 +63,7 @@
     import {mapActions} from 'vuex'
     import Media from "../media/Media.vue";
     import CommentList from "../comment/CommentList.vue";
-    import UserLink from "components/UserLink.vue";
+    import UserLink from "js/components/UserLink.vue";
     export default {
         components: {UserLink, CommentList, Media},
         props: ['message','editMessage'],
