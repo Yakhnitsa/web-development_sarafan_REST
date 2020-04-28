@@ -197,5 +197,5 @@
     Sentry.capture("Some message...");
     
 ### 20 Сборка всего добра в единый файл для деплоя
-   [Подробнее в файле](./readme/WEBPACK_BUILD.md)
+   [Подробнее в файле](/readme/WEBPACK_BUILD.md)
        

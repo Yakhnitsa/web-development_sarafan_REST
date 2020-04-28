@@ -1,18 +1,9 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+
 module.exports = {
-    entry: path.join(__dirname, 'src', 'main', 'resources', 'static', 'js', 'main.js'),
-    devServer: {
-        contentBase: './dist',
-        compress: true,
-        port: 8000,
-        allowedHosts: [
-            'localhost:8080'
-        ],
-        stats: 'errors-only',
-        clientLogLevel: 'error'
-    },
+    entry: path.join(__dirname, 'src', 'main', 'resources', 'js', 'main.js'),
     module: {
         rules: [
             {
@@ -36,16 +27,6 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            // {
-            //     test: /\.styl$/,
-            //     loader: ['style-loader', 'css-loader', 'stylus-loader', {
-            //         loader: 'vuetify-loader',
-            //         options: {
-            //             theme: path.resolve('./node_modules/vuetify/src/stylus/theme.styl')
-            //         }
-            //     }]
-            // }
-
         ]
     },
     plugins: [
