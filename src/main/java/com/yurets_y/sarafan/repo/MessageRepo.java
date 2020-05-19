@@ -11,6 +11,7 @@ import java.util.List;
 
 
 public interface MessageRepo extends JpaRepository<Message, Long>{
+
     @EntityGraph(attributePaths = {"comments"})
     Page<Message> findAll(Pageable pageable);
 

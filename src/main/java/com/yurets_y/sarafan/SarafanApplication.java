@@ -9,7 +9,7 @@ public class SarafanApplication {
 
 	public static void main(String[] args) {
 
-//		Sentry.capture("Starting application...");
+		Sentry.capture("Starting application...");
 		SpringApplication.run(SarafanApplication.class, args);
 
 	}

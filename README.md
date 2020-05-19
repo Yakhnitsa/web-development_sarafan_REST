@@ -198,4 +198,25 @@
     
 ### 20 Сборка всего добра в единый файл для деплоя
    [Подробнее в файле](/readme/WEBPACK_BUILD.md)
+   
+### 21 Публикация нахер... на хероку
+ - Регистрация на сайте https://heroku.com 
+ - Настраиваем зависимости для деплоя. Создаем еще один файл application.properties, 
+ старый переименовуем на application-dev.properties для сохранности, и будущих запусков при деплое.
+ - Устанавливаем heroku на компе:
+ https://devcenter.heroku.com/articles/getting-started-with-java#set-up
+ 
+ #### Установка зависимостей 
+ <plugin>
+         <groupId>com.heroku.sdk</groupId>
+         <artifactId>heroku-maven-plugin</artifactId>
+         <version>3.0.2</version>
+ </plugin>
+ 
+ - Запускаем создание:
+ heroku create
+  -- error - maven не установлен, устанавливаем...
+ 
+ 
+ - Меняем Properties на Херокушные:
        

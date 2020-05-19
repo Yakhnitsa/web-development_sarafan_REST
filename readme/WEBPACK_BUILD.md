@@ -1,7 +1,8 @@
 #20 Сборка всего добра в единый файл для деплоя
+   [Подробности сборки](https://webpack.js.org/guides/production/)
 ##Рефакторинг путей
   - Переносим все файлы из resources/static/js в корень resources/js  
-   [Подробности сборки](https://webpack.js.org/guides/production/)
+
   - Устанавливаем приложение сборки 
     yarn add -D webpack-merge
        
