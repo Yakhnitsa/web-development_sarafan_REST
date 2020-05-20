@@ -158,18 +158,58 @@
     <build>
         <plugins>
             <!--Плагин для инсталла yarn-->
-            <!--<plugin>-->
-                <!--<groupId>com.github.eirslett</groupId>-->
-                <!--<artifactId>frontend-maven-plugin</artifactId>-->
-                <!--<version>1.6</version>-->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.6</version>
 
-                <!--<configuration>-->
-                    <!--<workingDirectory>target/frontend</workingDirectory>-->
-                    <!--<environmentVariables>-->
-                        <!--&lt;!&ndash; Avoid certificates issues, needed behind a corporate proxy &ndash;&gt;-->
-                        <!--<NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>-->
-                    <!--</environmentVariables>-->
-                <!--</configuration>-->
+                <executions>
+                    <execution>
+                        <!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <!-- optional: default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+                    </execution>
+
+                    <!--Установка NPM-->
+
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+                    <!--Сборка приложениея через NPM-->
+                    <execution>
+                        <id>npm build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <workingDirectory>target/frontend</workingDirectory>
+                    <environmentVariables>
+                        <!-- Avoid certificates issues, needed behind a corporate proxy -->
+                        <NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>
+                    </environmentVariables>
+
+                    <nodeVersion>v4.6.0</nodeVersion>
+                    <!-- optional: with node version greater than 4.0.0 will use npm provided by node distribution -->
+                    <npmVersion>2.15.9</npmVersion>
+                </configuration>
 
                 <!--<executions>-->
                     <!--<execution>-->
@@ -200,7 +240,7 @@
                         <!--</configuration>-->
                     <!--</execution>-->
                 <!--</executions>-->
-            <!--</plugin>-->
+            </plugin>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
