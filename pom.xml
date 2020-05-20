@@ -221,7 +221,7 @@
                             <arguments>build</arguments>
                         </configuration>
                     </execution>
-                    
+
                 </executions>
 
                 <configuration>
@@ -231,7 +231,7 @@
                         <NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>
                     </environmentVariables>
 
-                    <nodeVersion>v8.9.3</nodeVersion>
+                    <nodeVersion>v12.13.0</nodeVersion>
 
                     <!--<npmVersion>2.15.9</npmVersion>-->
 
