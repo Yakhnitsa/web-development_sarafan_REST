@@ -174,7 +174,7 @@
                         <phase>generate-resources</phase>
                     </execution>
 
-                    <!--Установка NPM-->
+                    <!--&lt;!&ndash;Установка NPM&ndash;&gt;-->
 
                     <execution>
                         <id>npm install</id>
@@ -194,33 +194,15 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>run-script build</arguments>
                         </configuration>
                     </execution>
-                </executions>
 
-                <configuration>
-                    <workingDirectory>target/frontend</workingDirectory>
-                    <environmentVariables>
-                        <!-- Avoid certificates issues, needed behind a corporate proxy -->
-                        <NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>
-                    </environmentVariables>
-
-                    <nodeVersion>v4.6.0</nodeVersion>
-                    <!-- optional: with node version greater than 4.0.0 will use npm provided by node distribution -->
-                    <npmVersion>2.15.9</npmVersion>
-                </configuration>
-
-                <!--<executions>-->
                     <!--<execution>-->
                         <!--<id>install node and yarn</id>-->
                         <!--<goals>-->
                             <!--<goal>install-node-and-yarn</goal>-->
                         <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<nodeVersion>v8.9.3</nodeVersion>-->
-                            <!--<yarnVersion>v1.3.2</yarnVersion>-->
-                        <!--</configuration>-->
                     <!--</execution>-->
 
                     <!--<execution>-->
@@ -239,7 +221,21 @@
                             <!--<arguments>build</arguments>-->
                         <!--</configuration>-->
                     <!--</execution>-->
-                <!--</executions>-->
+                </executions>
+
+                <configuration>
+                    <workingDirectory>target/frontend</workingDirectory>
+                    <environmentVariables>
+                        <!-- Avoid certificates issues, needed behind a corporate proxy -->
+                        <NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>
+                    </environmentVariables>
+
+                    <nodeVersion>v8.9.3</nodeVersion>
+
+                    <!--<npmVersion>2.15.9</npmVersion>-->
+
+                    <yarnVersion>v1.21.0</yarnVersion>
+                </configuration>
             </plugin>
 
             <plugin>
