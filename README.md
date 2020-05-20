@@ -205,20 +205,28 @@
  старый переименовуем на application-dev.properties для сохранности, и будущих запусков при деплое.
  - Устанавливаем heroku на компе:
  https://devcenter.heroku.com/articles/getting-started-with-java#set-up
- 
- #### Установка зависимостей 
- <plugin>
-         <groupId>com.heroku.sdk</groupId>
-         <artifactId>heroku-maven-plugin</artifactId>
-         <version>3.0.2</version>
- </plugin>
- 
- - Запускаем создание:
- heroku create
-  -- error - maven не установлен, устанавливаем...
- 
- 
- - Меняем Properties на Херокушные:
- 
- Продолжаем боль и борьбу с heroku
-       
+ !!! Если установить зависимость по дефолту могут возникать ошибки, следует выбирать путь без пробелов и русских символов
+ - Логинимся в heroku
+        
+        heroku login
+
+- Создаем новый проект на heroku
+    
+     heroku create <название проекта> - если не указать название название назначится самостоятельно
+
+- прописываем переменные окружения
+
+       heroku config:set clientSecret="secret from google"
+
+- Прописываем разрешенные URL в гугле для логина и для перенаправления
+
+- Коммитим все изменения и отправляем на heroku
+
+        git push heroku master       
+- Запускаем проект
+        heroku ps:scale web=1
+- Открываем проект в браузере
+        heroku open
+        
+- Если все это добро работает останавливаем проект
+        heroku ps:scale web=0                        

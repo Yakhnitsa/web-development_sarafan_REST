@@ -138,4 +138,65 @@
      },  
      
 ## Долгая и нудная дрочелыга по изменению путей: 
-            
+
+## Добавление плагина для деплоя в maven:
+   Добавляем плагин в секцию plugins перед плагином сборки
+    
+    <build>
+        <plugins>    
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>1.6</version> 
+    
+   Прописываем конфигурацию в плагине:
+   
+    <plugin>
+    .....
+     <configuration>
+         <workingDirectory>target/frontend</workingDirectory>
+         <environmentVariables>
+        <!-- Avoid certificates issues, needed behind a corporate proxy -->
+         <NODE_TLS_REJECT_UNAUTHORIZED>0</NODE_TLS_REJECT_UNAUTHORIZED>
+         </environmentVariables>
+
+         <nodeVersion>v12.13.0</nodeVersion>
+
+         <!--<npmVersion>2.15.9</npmVersion>-->
+
+         <yarnVersion>v1.21.0</yarnVersion>
+     </configuration>
+   
+   Прописываем этапы сборки в плагине:
+   
+    <plugin>
+    ....
+    <executions>
+      <execution>
+          <id>install node and yarn</id>
+          <goals>
+              <goal>install-node-and-yarn</goal>
+          </goals>
+      </execution>
+        
+      <execution>
+          <id>yarn install</id>
+          <goals>
+              <goal>yarn</goal>
+          </goals>
+      </execution>
+        
+      <execution>
+          <id>yarn build</id>
+          <goals>
+              <goal>yarn</goal>
+          </goals>
+          <configuration>
+              <arguments>build</arguments>
+          </configuration>
+      </execution>     
+      
+      
+   Собирае проект с помощью maven       
+   
+    maven install 
