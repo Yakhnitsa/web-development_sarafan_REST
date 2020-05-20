@@ -164,63 +164,64 @@
                 <version>1.6</version>
 
                 <executions>
-                    <execution>
-                        <!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <!-- optional: default phase is "generate-resources" -->
-                        <phase>generate-resources</phase>
-                    </execution>
+                    <!--<execution>-->
+                        <!--&lt;!&ndash; optional: you don't really need execution ids, but it looks nice in your build log. &ndash;&gt;-->
+                        <!--<id>install node and npm</id>-->
+                        <!--<goals>-->
+                            <!--<goal>install-node-and-npm</goal>-->
+                        <!--</goals>-->
+                        <!--&lt;!&ndash; optional: default phase is "generate-resources" &ndash;&gt;-->
+                        <!--<phase>generate-resources</phase>-->
+                    <!--</execution>-->
 
                     <!--&lt;!&ndash;Установка NPM&ndash;&gt;-->
 
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <!--Сборка приложениея через NPM-->
-                    <execution>
-                        <id>npm build</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>run-script build</arguments>
-                        </configuration>
-                    </execution>
-
                     <!--<execution>-->
-                        <!--<id>install node and yarn</id>-->
+                        <!--<id>npm install</id>-->
                         <!--<goals>-->
-                            <!--<goal>install-node-and-yarn</goal>-->
+                            <!--<goal>npm</goal>-->
                         <!--</goals>-->
-                    <!--</execution>-->
-
-                    <!--<execution>-->
-                        <!--<id>yarn install</id>-->
-                        <!--<goals>-->
-                            <!--<goal>yarn</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-
-                    <!--<execution>-->
-                        <!--<id>yarn build</id>-->
-                        <!--<goals>-->
-                            <!--<goal>yarn</goal>-->
-                        <!--</goals>-->
+                        <!--<phase>generate-resources</phase>-->
                         <!--<configuration>-->
-                            <!--<arguments>build</arguments>-->
+                            <!--<arguments>install</arguments>-->
                         <!--</configuration>-->
                     <!--</execution>-->
+
+                    <!--&lt;!&ndash;Сборка приложениея через NPM&ndash;&gt;-->
+                    <!--<execution>-->
+                        <!--<id>npm build</id>-->
+                        <!--<goals>-->
+                            <!--<goal>npm</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<arguments>run-script build</arguments>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+
+                    <execution>
+                        <id>install node and yarn</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>yarn install</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>yarn build</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                    
                 </executions>
 
                 <configuration>
