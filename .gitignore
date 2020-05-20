@@ -32,4 +32,4 @@ build/
 
 
 ### Файлы сборки node.js ###
-/src/main/resources/static/js
+# /src/main/resources/static/js
